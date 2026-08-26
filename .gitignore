@@ -33,8 +33,12 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
-# vercel
-.vercel
+# pakistan-mart-pos
+
+# leftover nested folder after moving the Next app to repo root
+/pakistan-mart-pos/node_modules
+/pakistan-mart-pos/.next
+
 
 # typescript
 *.tsbuildinfo

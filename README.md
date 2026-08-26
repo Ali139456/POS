@@ -2,6 +2,8 @@
 
 Production-quality frontend Point of Sale for a Pakistani grocery / supermarket. Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, Zustand, Recharts, and Sonner.
 
+**Poori functionalities ki detail:** [DOCUMENTATION.md](./DOCUMENTATION.md)
+
 ## Run
 
 ```bash
@@ -12,6 +14,10 @@ pnpm dev
 Open [http://localhost:3000](http://localhost:3000).
 
 Cashier PIN login: **Ali Hassan / 1234** (`/login`).
+
+## Deploy (Vercel)
+
+The Next.js app lives at the **repository root** (`package.json` with `"next"`). Connect the GitHub repo and deploy — no Root Directory override is needed.
 
 ## What is included
 
