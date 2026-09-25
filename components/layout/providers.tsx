@@ -7,6 +7,8 @@ import { AppSidebar } from "@/components/layout/app-sidebar";
 import { CommandPalette } from "@/components/layout/command-palette";
 import { NotificationPanel } from "@/components/layout/notification-panel";
 import { useUiStore } from "@/lib/store/ui-store";
+import { useAppStore } from "@/lib/store/app-store";
+import { useOrgStore } from "@/lib/store/org-store";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -20,6 +22,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
 export function AppShell({ children }: { children: React.ReactNode }) {
   const setSidebarCollapsed = useUiStore((s) => s.setSidebarCollapsed);
   const setMobileNavOpen = useUiStore((s) => s.setMobileNavOpen);
+
+  useEffect(() => {
+    const emp = useAppStore.getState().employees.find((e) => e.id === useAppStore.getState().currentEmployeeId);
+    if (emp) useOrgStore.getState().initContextForEmployee(emp.accessLevel, emp.organizationId);
+  }, []);
 
   useEffect(() => {
     let prev = window.innerWidth;

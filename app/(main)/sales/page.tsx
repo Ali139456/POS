@@ -13,11 +13,12 @@ import { ExportMenu } from "@/components/shared/export-menu";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { EmptyState } from "@/components/shared/page-header";
 import { useAppStore } from "@/lib/store/app-store";
+import { useScopedSales } from "@/lib/hooks/use-scoped-data";
 import { formatDateTime, formatPKR } from "@/lib/utils";
 import { toast } from "sonner";
 
 export default function SalesPage() {
-  const sales = useAppStore((s) => s.sales);
+  const sales = useScopedSales();
   const voidSale = useAppStore((s) => s.voidSale);
   const router = useRouter();
   const [q, setQ] = useState("");

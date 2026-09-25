@@ -11,6 +11,7 @@ import { Input, Label, Select, Textarea } from "@/components/ui/input";
 import { Dialog } from "@/components/ui/dialog";
 import { StockBadge } from "@/components/shared/status-badge";
 import { useAppStore } from "@/lib/store/app-store";
+import { useScopedProducts } from "@/lib/hooks/use-scoped-data";
 import { daysUntil, formatPKR, stockStatus } from "@/lib/utils";
 import type { AdjustmentType } from "@/lib/types";
 import { toast } from "sonner";
@@ -18,7 +19,7 @@ import { toast } from "sonner";
 const TYPES: AdjustmentType[] = ["Stock In", "Stock Out", "Damage", "Expired", "Lost", "Correction", "Personal Use", "Other"];
 
 export default function InventoryPage() {
-  const products = useAppStore((s) => s.products);
+  const products = useScopedProducts();
   const categories = useAppStore((s) => s.categories);
   const movements = useAppStore((s) => s.movements);
   const adjustStock = useAppStore((s) => s.adjustStock);

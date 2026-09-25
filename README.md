@@ -2,7 +2,7 @@
 
 Production-quality frontend Point of Sale for a Pakistani grocery / supermarket. Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, Zustand, Recharts, and Sonner.
 
-**Poori functionalities ki detail:** [DOCUMENTATION.md](./DOCUMENTATION.md)
+**Client user guide (English):** [DOCUMENTATION.md](./DOCUMENTATION.md)
 
 ## Run
 

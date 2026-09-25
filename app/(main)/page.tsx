@@ -22,6 +22,9 @@ import { Button } from "@/components/ui/button";
 import { StockBadge } from "@/components/shared/status-badge";
 import { ProductThumb } from "@/components/shared/thumbs";
 import { useAppStore, useCurrentEmployee } from "@/lib/store/app-store";
+import { useOrgStore, useIsParentUser } from "@/lib/store/org-store";
+import { useScopedSales } from "@/lib/hooks/use-scoped-data";
+import { ParentDashboard } from "@/components/parent/parent-dashboard";
 import { formatDateTime, formatPKR, greeting, stockStatus } from "@/lib/utils";
 import { hourlyChart, weeklyChart } from "@/lib/mock/seed";
 import { useRouter } from "next/navigation";
@@ -38,7 +41,9 @@ const PAY_COLORS: Record<string, string> = {
 
 export default function DashboardPage() {
   const employee = useCurrentEmployee();
-  const sales = useAppStore((s) => s.sales);
+  const isParent = useIsParentUser();
+  const storeContext = useOrgStore((s) => s.storeContext);
+  const sales = useScopedSales();
   const products = useAppStore((s) => s.products);
   const customers = useAppStore((s) => s.customers);
   const suppliers = useAppStore((s) => s.suppliers);
@@ -91,6 +96,21 @@ export default function DashboardPage() {
   const inventoryValue = products.reduce((a, p) => a + p.stock * p.purchasePrice, 0);
   const creditOut = customers.reduce((a, c) => a + c.creditBalance, 0);
   const supplierOut = suppliers.reduce((a, s) => a + s.outstandingBalance, 0);
+
+  if (isParent && storeContext === "all") {
+    return (
+      <>
+        <TopHeader />
+        <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-thin p-3 sm:p-4 lg:p-6">
+          <div className="mb-6">
+            <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">Business Overview</h1>
+            <p className="mt-1 text-sm text-muted-foreground">All stores · {employee.name}</p>
+          </div>
+          <ParentDashboard />
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

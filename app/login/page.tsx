@@ -6,6 +6,7 @@ import { Store } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAppStore } from "@/lib/store/app-store";
+import { useOrgStore } from "@/lib/store/org-store";
 import { toast } from "sonner";
 
 export default function LoginPage() {
@@ -24,6 +25,7 @@ export default function LoginPage() {
       return;
     }
     setCurrent(emp.id);
+    useOrgStore.getState().initContextForEmployee(emp.accessLevel, emp.organizationId);
     toast.success(`Welcome back, ${emp.name.split(" ")[0]}`);
     router.push("/");
   }

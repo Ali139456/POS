@@ -66,7 +66,200 @@ export type NotificationType =
   | "credit_overdue"
   | "supplier_due"
   | "large_discount"
-  | "register_difference";
+  | "register_difference"
+  | "stock_request"
+  | "stock_transfer";
+
+export type OrganizationType = "parent" | "child" | "standalone";
+export type LocationKind = "retail" | "warehouse";
+export type AccessLevel = "parent" | "store";
+export type StoreStatus = "Active" | "Inactive";
+
+export type StockRequestStatus =
+  | "DRAFT"
+  | "PENDING"
+  | "APPROVED"
+  | "PARTIALLY_APPROVED"
+  | "REJECTED"
+  | "DISPATCHED"
+  | "PARTIALLY_RECEIVED"
+  | "RECEIVED"
+  | "CANCELLED";
+
+export type StockTransferStatus =
+  | "DRAFT"
+  | "APPROVED"
+  | "DISPATCHED"
+  | "PARTIALLY_RECEIVED"
+  | "RECEIVED"
+  | "CANCELLED";
+
+export interface ParentOrganization {
+  id: string;
+  type: OrganizationType;
+  name: string;
+  legalName?: string;
+  phone: string;
+  email: string;
+  address: string;
+  city: string;
+}
+
+export interface ChildStore {
+  id: string;
+  organizationId: string;
+  parentOrganizationId: string;
+  locationId: string;
+  name: string;
+  managerId: string;
+  managerName: string;
+  location: string;
+  city: string;
+  phone: string;
+  status: StoreStatus;
+}
+
+export interface CentralWarehouse {
+  id: string;
+  organizationId: string;
+  locationId: string;
+  name: string;
+  address: string;
+  city: string;
+}
+
+export interface InventoryBalance {
+  locationId: string;
+  organizationId: string;
+  productId: string;
+  variantId?: string;
+  stock: number;
+  reserved: number;
+  minStock: number;
+}
+
+export interface StockRequestItem {
+  id: string;
+  productId: string;
+  variantId?: string;
+  productName: string;
+  currentStock: number;
+  minStock: number;
+  requestedQuantity: number;
+  approvedQuantity?: number;
+  reason?: string;
+  notes?: string;
+}
+
+export interface StockRequest {
+  id: string;
+  requestNumber: string;
+  organizationId: string;
+  storeId: string;
+  storeName: string;
+  locationId: string;
+  requestedById: string;
+  requestedByName: string;
+  items: StockRequestItem[];
+  status: StockRequestStatus;
+  notes?: string;
+  reviewedById?: string;
+  reviewedByName?: string;
+  reviewedAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface StockTransferItem {
+  id: string;
+  productId: string;
+  variantId?: string;
+  productName: string;
+  sentQuantity: number;
+  receivedQuantity: number;
+  receiveNote?: string;
+}
+
+export interface StockTransfer {
+  id: string;
+  transferNumber: string;
+  organizationId: string;
+  stockRequestId?: string;
+  fromLocationId: string;
+  fromLocationName: string;
+  toLocationId: string;
+  toLocationName: string;
+  toStoreId: string;
+  toStoreName: string;
+  items: StockTransferItem[];
+  status: StockTransferStatus;
+  createdById: string;
+  createdByName: string;
+  dispatchedById?: string;
+  dispatchedByName?: string;
+  receivedById?: string;
+  receivedByName?: string;
+  createdAt: string;
+  dispatchedAt?: string;
+  receivedAt?: string;
+  notes?: string;
+}
+
+export interface StoreInventorySummary {
+  storeId: string;
+  organizationId: string;
+  storeName: string;
+  productCount: number;
+  totalUnits: number;
+  inventoryValue: number;
+  lowStockCount: number;
+  outOfStockCount: number;
+}
+
+export interface StoreSummary {
+  storeId: string;
+  organizationId: string;
+  storeName: string;
+  todaySales: number;
+  todayOrders: number;
+  inventoryValue: number;
+  lowStockCount: number;
+  pendingRequests: number;
+}
+
+export interface LowStockItem {
+  productId: string;
+  variantId?: string;
+  productName: string;
+  storeId: string;
+  storeName: string;
+  locationId: string;
+  currentStock: number;
+  minStock: number;
+  suggestedQuantity: number;
+}
+
+export interface ActivityEntry {
+  id: string;
+  organizationId?: string;
+  storeId?: string;
+  storeName?: string;
+  type:
+    | "stock_request_created"
+    | "stock_request_approved"
+    | "stock_request_rejected"
+    | "transfer_created"
+    | "transfer_dispatched"
+    | "transfer_received"
+    | "inventory_adjusted";
+  title: string;
+  description: string;
+  actorName: string;
+  createdAt: string;
+}
+
+/** Parent store selector: all stores, warehouse, or a child org id */
+export type StoreContextId = "all" | "warehouse" | string;
 
 export interface Store {
   id: string;
@@ -117,6 +310,12 @@ export interface Employee {
   email?: string;
   permissions: PermissionSet;
   avatarHue: number;
+  /** Organization the employee belongs to */
+  organizationId: string;
+  /** Parent users can switch store context; store users are locked to their org */
+  accessLevel: AccessLevel;
+  /** Child store id when accessLevel is store */
+  storeId?: string;
 }
 
 export interface Category {
@@ -232,6 +431,7 @@ export interface SaleItem {
 
 export interface Sale {
   id: string;
+  organizationId: string;
   invoiceNumber: string;
   date: string;
   customerId: string;

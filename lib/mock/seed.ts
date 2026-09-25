@@ -78,6 +78,9 @@ export const employees: Employee[] = [
     email: "ali@alnoormart.pk",
     permissions: cashierPerms,
     avatarHue: 168,
+    organizationId: "org_gulberg",
+    accessLevel: "store",
+    storeId: "store_gulberg",
   },
   {
     id: "emp_2",
@@ -89,6 +92,9 @@ export const employees: Employee[] = [
     email: "fatima@alnoormart.pk",
     permissions: fullPerms,
     avatarHue: 32,
+    organizationId: "org_gulberg",
+    accessLevel: "store",
+    storeId: "store_gulberg",
   },
   {
     id: "emp_3",
@@ -100,6 +106,8 @@ export const employees: Employee[] = [
     email: "usman@alnoormart.pk",
     permissions: fullPerms,
     avatarHue: 210,
+    organizationId: "org_parent",
+    accessLevel: "parent",
   },
   {
     id: "emp_4",
@@ -110,6 +118,9 @@ export const employees: Employee[] = [
     status: "Active",
     permissions: { ...fullPerms, canManageEmployees: false, canVoidInvoice: false },
     avatarHue: 280,
+    organizationId: "org_bahria",
+    accessLevel: "store",
+    storeId: "store_bahria",
   },
   {
     id: "emp_5",
@@ -120,6 +131,9 @@ export const employees: Employee[] = [
     status: "Active",
     permissions: cashierPerms,
     avatarHue: 12,
+    organizationId: "org_dha",
+    accessLevel: "store",
+    storeId: "store_dha",
   },
 ];
 
@@ -617,8 +631,11 @@ export const customers: Customer[] = [
   { id: "cust_7", name: "Zainab Fatima", phone: "0322-9988771", whatsapp: "0322-9988771", email: "", address: "Faisal Town", type: "VIP", totalPurchases: 74200, totalOrders: 21, creditBalance: 0, loyaltyPoints: 740 },
 ];
 
-function sale(partial: Sale): Sale {
-  return partial;
+function sale(partial: Omit<Sale, "organizationId"> & { organizationId?: string }): Sale {
+  const org =
+    partial.organizationId ??
+    (partial.cashierId === "emp_5" ? "org_dha" : partial.cashierId === "emp_4" ? "org_bahria" : "org_gulberg");
+  return { organizationId: org, ...partial };
 }
 
 export const sales: Sale[] = [
@@ -942,6 +959,8 @@ export const notifications: AppNotification[] = [
   { id: "n4", type: "expiring", title: "Expiring soon", message: "Dawn Bread Large expires in 2 days. Olper's Yogurt expires in 3 days.", date: "2026-08-26T08:05:00", read: false },
   { id: "n5", type: "credit_overdue", title: "Khata overdue", message: "Kamran Ali outstanding Rs. 45,000 — last payment more than 14 days ago.", date: "2026-08-26T08:10:00", read: true },
   { id: "n6", type: "supplier_due", title: "Supplier payment due", message: "Punjab Kiryana Supply Co. outstanding Rs. 95,600.", date: "2026-08-25T18:00:00", read: true },
+  { id: "n7", type: "stock_request", title: "New stock request", message: "REQ-00124 from Al-Noor DHA — 8 items pending review.", date: "2026-08-26T08:30:00", read: false },
+  { id: "n8", type: "stock_transfer", title: "Transfer dispatched", message: "TR-00124 is ready for receipt at Al-Noor Bahria.", date: "2026-08-25T17:00:00", read: false },
 ];
 
 export const paymentMethods: PaymentMethodSetting[] = [

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { cartTotals, usePosStore, WALK_IN } from "@/lib/store/pos-store";
 import { useAppStore, useCurrentEmployee } from "@/lib/store/app-store";
+import { useOrgStore } from "@/lib/store/org-store";
 import { formatPKR, uid } from "@/lib/utils";
 import type { PaymentMethod, PaymentSplit, Sale } from "@/lib/types";
 import { ReceiptPreview } from "@/components/pos/receipt-preview";
@@ -46,8 +47,17 @@ export function PaymentDialog({ open, onClose }: { open: boolean; onClose: () =>
   function complete(payments: PaymentSplit[]) {
     if (!items.length) return;
     const invoiceNumber = nextInvoice();
+    const orgId = useOrgStore.getState().getEffectiveOrgId() ?? employee.organizationId;
+    const locationId = useOrgStore.getState().getEffectiveLocationId();
+    if (locationId) {
+      useOrgStore.getState().deductInventory(
+        locationId,
+        items.map((i) => ({ productId: i.productId, variantId: i.variantId, quantity: i.quantity })),
+      );
+    }
     const sale: Sale = {
       id: uid("sale"),
+      organizationId: orgId,
       invoiceNumber,
       date: new Date().toISOString(),
       customerId,

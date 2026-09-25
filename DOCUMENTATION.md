@@ -1,503 +1,382 @@
-# Al-Noor Super Mart POS — Documentation
+# Al-Noor Super Mart POS  
+## User Guide
 
-Yeh document **Al-Noor Super Mart POS** ki saari functionalities explain karta hai. App Pakistani mart / grocery / supermarket ke liye bani hai. Currency **PKR (Rs.)** hai. Is version mein data **mock / in-memory** hai — refresh karne se demo data reset ho jata hai. Backend API abhi connected nahi.
+**Prepared for:** Store owner, managers, and counter staff  
+**Software:** Al-Noor Super Mart Point of Sale  
+**Currency:** Pakistani Rupee (Rs.)  
+**Version:** 1.0 — August 2026
 
----
-
-## 1. Project kya hai?
-
-Yeh ek complete **Point of Sale (POS)** frontend hai. Cashier counter par sale karta hai, manager inventory aur khata dekhte hain, owner reports aur cash register handle karta hai.
-
-**Tech stack**
-
-| Cheez | Use |
-| --- | --- |
-| Next.js 16 (App Router) | Pages / routing |
-| React 19 + TypeScript | UI |
-| Tailwind CSS v4 | Design / responsive layout |
-| Zustand | Cart, products, sales, shift state |
-| Recharts | Dashboard aur reports ke charts |
-| Sonner | Toast notifications |
-| next-themes | Light / Dark mode |
-
-App folder: repo root (`package.json` yahan hai)
+This guide explains how to use the system in daily store operations. You do not need technical knowledge, installation, or a computer terminal. Open the software in a web browser, sign in, and start selling.
 
 ---
 
-## 2. Kaise chalayein
+## 1. How to open the software
 
-```bash
-pnpm install
-pnpm dev
-```
+1. On your computer, laptop, tablet, or phone, open a browser such as **Google Chrome** or **Microsoft Edge**.
+2. Go to the web address provided to you for Al-Noor POS (bookmark this page).
+3. The **sign-in** screen will appear.
+4. Select your name, enter your 4-digit PIN, and tap **OK**.
 
-Browser: [http://localhost:3000](http://localhost:3000)
+Use the software on a desktop or laptop at the counter for the fastest checkout. Tablets and phones are fully supported.
 
-Pehle `/login` khulega. Employee select karein, 4-digit PIN type karein, **OK** dabayein.
+If the page does not load, check your internet connection and try again. Contact your software provider if the problem continues.
 
-### Demo login PINs
+### Sample accounts (demonstration)
 
-| Employee | Role | PIN |
+| Staff | Role | PIN |
 | --- | --- | --- |
-| Ali Hassan | Cashier | `1234` |
-| Fatima Khan | Manager | `2468` |
-| Usman Malik | Owner | `0000` |
-| Ayesha Raza | Inventory Manager | `4321` |
-| Bilal Ahmed | Cashier | `1111` |
+| Ali Hassan | Cashier | 1234 |
+| Fatima Khan | Manager | 2468 |
+| Usman Malik | Owner | 0000 |
+| Ayesha Raza | Inventory Manager | 4321 |
+| Bilal Ahmed | Cashier | 1111 |
+
+Use these only while reviewing the demonstration. Live store PINs should be unique and kept private.
 
 ---
 
-## 3. Common UI (har page par)
+## 2. What the system does
 
-### Sidebar
-- **Desktop:** full menu (icon + name), store name, logged-in user
-- **Tablet:** icon-only compact sidebar
-- **Mobile:** hamburger → slide-in drawer
-- Sidebar collapse button large screens par available hai
-- Profile card ke **⋮** (3 dots) se **Logout** hota hai
-- **Settings** alag sidebar item hai (profile footer mein nahi)
+Al-Noor POS is a complete retail system for a Pakistani grocery, mart, or supermarket. Staff can:
 
-### Header
-- Page title
-- Current date + **Shift open / Closed**
-- Global search (**Ctrl + K**)
-- Light / Dark theme toggle
-- Notification bell (low stock, expiry, khata, register alerts)
-- Chhoti screens par extra controls **More (⋯)** menu mein chale jate hain
-
-### Ctrl + K command palette
-Yahan se jaldi search / jump:
-
-- Pages (Dashboard, POS, Sales, Products, …)
-- Products
-- Customers
-- Invoices
-- Suppliers
-
-### Responsive
-Desktop, laptop (**1366×768 POS monitors**), tablet aur mobile ke liye alag layouts hain. POS par mobile mein cart neeche sticky bar se khulti hai.
+- Sell products at the counter (barcode, search, or tap)
+- Accept **Cash**, **Card**, **Bank Transfer**, **JazzCash**, **EasyPaisa**, split payments, and customer credit (khata / udhaar)
+- Print or share receipts
+- Manage products, stock, expiry, suppliers, and purchase orders
+- Keep customer records and khata ledgers
+- Process returns and refunds
+- Record shop expenses and cash-drawer shifts
+- View sales, profit, and other reports
+- Control staff roles and store settings
 
 ---
 
-## 4. Modules (functionalities)
+## 3. Screen layout
 
-### 4.1 Login — `/login`
+After sign-in you will see the same layout on every page.
 
-- Cashier / manager list se user select
-- 4-digit PIN keypad (touch-friendly)
-- Galat PIN par error toast
-- Sahi PIN ke baad Dashboard / last flow
+**Left menu**  
+Store name, your profile, and all modules (Dashboard, POS, Sales, Products, and so on). On a large screen the full names are shown. On a tablet, icons only. On a phone, tap the menu button to open the list. Use the three dots (**⋮**) on your profile to **log out**.
 
----
+**Top bar**  
+Page title, today’s date, whether the cash shift is open, search, light/dark theme, and alerts (low stock, expiry, khata, cash drawer).
 
-### 4.2 Dashboard — `/`
-
-Store ka daily snapshot:
-
-**KPI cards**
-
-- Today's Sales
-- Today's Profit
-- Total Orders
-- Average Order
-- Cash Sales
-- Card / Online (Card, Bank Transfer, JazzCash, EasyPaisa)
-
-**Aur views**
-
-- **Sales Overview** chart — Today / 7 Days / 30 Days / 3 Months / 1 Year
-- **Payment Methods** mix (Cash, Card, JazzCash, EasyPaisa, Credit)
-- **Top Selling Products** — units, revenue, profit
-- **Low Stock Alerts** — Restock button → Purchase Order
-- **Recent Sales** — invoice click se detail
-- **Business Statistics** — products, inventory value, customers, suppliers, customer credit, supplier payables
-
-**Open POS** button se seedha checkout khulta hai.
+**Quick search**  
+On a computer, press **Ctrl + K** to jump to a page, product, customer, invoice, or supplier.
 
 ---
 
-### 4.3 POS Checkout — `/pos`  (sab se important)
+## 4. Recommended daily routine (cashier)
 
-Yeh cashier ka main screen hai.
+1. Sign in with your PIN.
+2. Open **Cash Management** and confirm the shift is **Open**.
+3. Open **POS**.
+4. Scan or tap products into the cart.
+5. Select a customer if they are a regular or buying on khata.
+6. Apply a discount only if your role allows it.
+7. Tap **Pay Now** and complete payment.
+8. Print or send the receipt, then start the next sale.
+9. At closing, go to **Cash Management**, count the drawer, and **Close shift**.
 
-**Product side**
+Managers should also review restock, expiry, khata collections, expenses, and reports during the day.
 
-- Search: name, SKU, ya **barcode**
-- Category chips: All, Grocery, Beverages, Snacks, Dairy, Frozen, Bakery, Household, …
-- Product cards: price, stock, variants badge
-- Variant wale items (jaise Coca Cola) par size/option dialog
-- Out of stock items disable
+---
+
+## 5. Features and how to use them
+
+### 5.1 Sign in
+
+- Choose your name from the staff list.
+- Enter your 4-digit PIN on the keypad (suitable for touch screens).
+- An incorrect PIN shows an error. A correct PIN takes you into the system.
+
+---
+
+### 5.2 Dashboard
+
+The home screen is a snapshot of the store today.
+
+You will see:
+
+- Today’s sales, profit, number of orders, and average order value
+- Cash sales versus card / online (Card, Bank Transfer, JazzCash, EasyPaisa)
+- A sales chart (Today, 7 days, 30 days, 3 months, 1 year)
+- Payment-method mix
+- Top-selling products
+- Low-stock alerts, with a restock action that opens a purchase order
+- Recent sales (open an invoice for detail)
+- Business totals: products, inventory value, customers, suppliers, customer credit, and supplier payables
+
+Use **Open POS** to go straight to checkout.
+
+---
+
+### 5.3 POS checkout (main counter screen)
+
+This is the cashier’s working screen.
+
+**Finding products**
+
+- Search by name, SKU, or barcode.
+- Filter by category (All, Grocery, Beverages, Snacks, Dairy, Frozen, Bakery, Household, and others).
+- Product cards show price and stock. Out-of-stock items cannot be sold.
+- If a product has sizes (for example Coca-Cola bottles), choose the variant first.
 
 **Cart**
 
-- Line items, qty +/− (touch size ~44px)
-- Per-item discount
-- Walk-in ya selected customer
-- Order-level discount (Rs. ya %)
-- Hold sale (park cart)
-- Clear cart (confirm)
-- Subtotal, discounts, tax, round off, **Grand Total**
-- **Pay Now**
+- Increase or decrease quantity with the + / − buttons.
+- Apply a line discount or an order discount (rupees or percent), if permitted.
+- Choose Walk-in or a named customer.
+- **Hold sale** parks the cart for later. **Clear cart** empties it after confirmation.
+- The footer shows subtotal, discounts, tax, round-off, and **Grand Total**.
 
 **Payment**
 
-- Cash (amount received, change, quick buttons: Exact, 500, 1000, 2000, 5000, 10000)
-- Card
-- Bank Transfer
-- JazzCash
-- EasyPaisa
-- Customer Credit (khata / udhaar) — walk-in par nahi
-- **Split Payment** (do methods, total match hona zaroori)
+Tap **Pay Now**, then choose:
 
-Sale complete hone par:
+- **Cash** — enter amount received; change is calculated. Quick amounts: Exact, 500, 1,000, 2,000, 5,000, 10,000
+- **Card**
+- **Bank Transfer**
+- **JazzCash**
+- **EasyPaisa**
+- **Customer Credit (khata)** — a named customer is required; walk-in cannot use khata
+- **Split payment** — two methods; the amounts must equal the total
 
-- Invoice number generate
-- Stock ghat'ta hai
-- Receipt preview: Print / Download / WhatsApp / Email (demo toasts)
-- New Sale
+When the sale is complete, stock is reduced, an invoice number is created, and you can print, download, or share the receipt (WhatsApp / Email). Then start a **New Sale**.
 
-**Held sales**
+**Held sales**  
+Use **Held** in the header to resume or delete a parked cart.
 
-- Header **Held** button se parked carts
-- Resume karke sale continue
-- Delete hold
+**On phone or tablet**  
+A bar at the bottom shows item count and total. Tap it to open the cart, then pay.
 
-**Keyboard shortcuts (desktop)**
+**Keyboard shortcuts (computer)**
 
 | Key | Action |
 | --- | --- |
-| F1 | Search focus |
-| F2 | Customer selector |
-| F4 | Hold current sale |
-| F8 / F9 / F10 | Pay |
-| Esc | Dialog / cart close |
-| Ctrl + K | Global search |
-
-**Mobile / tablet POS**
-
-- Neeche sticky bar: `5 items — Rs. 4,850 | View Cart`
-- Cart full-screen ya side sheet
-- Pay Now cart ke andar sticky rehta hai
+| F1 | Focus product search |
+| F2 | Select customer |
+| F4 | Hold the current sale |
+| F8 / F9 / F10 | Open payment |
+| Esc | Close a dialog or the cart |
+| Ctrl + K | Search the whole system |
 
 ---
 
-### 4.4 Sales — `/sales`
+### 5.4 Sales history
 
-Completed invoices ki history.
+Open **Sales** to review completed invoices.
 
-- Search: invoice, customer, cashier
-- Filter: today / yesterday / 7 days / 30 days
-- Payment method filter
-- Mobile: card list; desktop: table
-- Actions: View, Print, Return, **Void**
+- Search by invoice number, customer, or cashier.
+- Filter by date (today, yesterday, 7 days, 30 days) and payment method.
+- Open an invoice to view line items, discounts, tax, total, and payment details.
+- Available actions: View, Print, Return, Void.
 
-**Invoice detail** `/sales/[id]`
-
-- Store + invoice header
-- Line items, discounts, tax, total
-- Payment method / reference
-- Receipt preview
-- Print, Download, WhatsApp, Return Item, Void Sale
-
-Void hone par sale **Voided** mark hoti hai (demo ledger).
+A voided sale is marked **Voided** and should be used only when authorised.
 
 ---
 
-### 4.5 Products — `/products`
+### 5.5 Products
 
-Poora catalog.
+The full catalogue lives under **Products**.
 
-- Search: name, SKU, barcode, brand
-- Filters: category, stock (in / low / out), supplier, Active/Inactive
-- Table (desktop) / cards (mobile)
-- Add Product, Edit, duplicate-style copy, delete (confirm)
-- Print Barcodes, Export CSV, Import CSV (import demo toast)
+- Search by name, SKU, barcode, or brand.
+- Filter by category, stock status (in / low / out), supplier, and Active / Inactive.
+- Add, edit, copy, or delete a product (delete asks for confirmation).
+- Print barcodes and export to CSV. Import is available as a demonstration action.
 
-**Add / Edit** `/products/new`, `/products/[id]`
+When adding or editing a product you can set:
 
 - Name, description, category, brand
-- SKU + barcode generate
-- Purchase / selling / wholesale / min selling price
-- Auto profit + margin
-- Stock, min/max, unit (Piece, KG, Liter, …)
-- Supplier, manufacturing / expiry date, batch
-- Variants table (agar product par variants hain)
+- SKU and barcode (can be generated)
+- Purchase, selling, wholesale, and minimum selling prices (profit and margin are calculated)
+- Stock, minimum/maximum levels, and unit (Piece, KG, Litre, and others)
+- Supplier, manufacturing date, expiry date, and batch
+- Variants (sizes or packs), where needed
 
-**Barcodes** `/products/barcodes`
-
-- Product select, quantity, label size (small / medium / large)
-- Print sheet
+**Barcode labels**  
+Select products, quantity, and label size (small / medium / large), then print the sheet.
 
 ---
 
-### 4.6 Categories — `/categories`
+### 5.6 Categories
 
-POS tabs organize karne ke liye.
-
-- New category add
-- Card grid: name, product count
-- Delete (confirm)
+Categories appear as tabs on the POS screen. Add a category, see how many products it contains, or delete it after confirmation.
 
 ---
 
-### 4.7 Inventory — `/inventory`
+### 5.7 Inventory and expiry
 
-Stock control.
+**Inventory** shows stock value, product count, low stock, out of stock, and items expiring soon.
 
-**KPIs:** Inventory Value, Total Products, Low Stock, Out of Stock, Expiring Soon
+For each product you can see available stock, reserved quantity, minimum level, cost, and value.
 
-- Product list: available, reserved, min, purchase price, value, status
-- **Adjust stock:** Stock In, Stock Out, Damage, Expired, Lost, Correction, Personal Use, Other
-- Reason + notes
-- **Movement history:** date, product, type, qty, previous → new stock, employee
+**Adjust stock** when goods arrive, leave, or must be corrected. Types include Stock In, Stock Out, Damage, Expired, Lost, Correction, Personal Use, and Other. Always add a reason and notes. Movement history records date, product, type, quantity, previous and new stock, and the staff member.
 
-**Expiry** `/inventory/expiry`
-
-- Windows: Expired, 7 / 30 / 60 / 90 days
-- Batch, qty, expiry date, days left, stock value, Critical / Watch status
+**Expiry** lists batches that are expired or due within 7, 30, 60, or 90 days, with quantity, date, days remaining, value, and Critical / Watch status.
 
 ---
 
-### 4.8 Purchase Orders — `/purchase-orders`
+### 5.8 Purchase orders
 
-Supplier se restock.
+Use purchase orders to restock from suppliers.
 
-- PO list: number, supplier, date, expected delivery, total, status
-- Status: Draft, Ordered, Partially Received, Received, Cancelled
-- **Receive:** ordered vs received qty (partial receive supported)
-- Cancel PO
+- Each order shows number, supplier, date, expected delivery, total, and status: Draft, Ordered, Partially Received, Received, or Cancelled.
+- **Receive** goods against ordered quantities (partial receipts are allowed).
+- Cancel an order if it will not arrive.
 
-**Create PO** `/purchase-orders/new`
-
-- Supplier, date, expected delivery
-- Add product lines (qty × cost)
-- Discount, tax (currently 0%), total
-- Save → Ordered
+To create an order: choose the supplier and dates, add product lines (quantity × cost), apply discount if needed, then save. The order is placed as **Ordered**.
 
 ---
 
-### 4.9 Suppliers — `/suppliers`
+### 5.9 Suppliers
 
-Distributors / mandi vendors.
+Keep distributor and vendor records: company, contact, phone, email, and NTN, plus total purchases and outstanding balance.
 
-- Company, contact, phone, email, NTN
-- Total purchases + outstanding balance
-- Create PO, open profile
-
-**Supplier profile** `/suppliers/[id]`
-
-- Contact + payable
-- Record supplier payment
-- Ledger
-- Products supplied
+Open a supplier to record a payment, view the ledger, see products they supply, or create a purchase order.
 
 ---
 
-### 4.10 Customers — `/customers`
+### 5.10 Customers
 
-- Types: Walk-in, Regular, Wholesale, VIP
-- Search name / phone
-- Purchases, orders, avg order, **credit (khata)**, loyalty points
-- Add customer
-- Delete (confirm)
-- Profile: `/customers/[id]` — stats, credit ledger, purchase history, returns count
+Customer types: Walk-in, Regular, Wholesale, and VIP.
 
----
+Search by name or phone. Each record shows purchases, order count, average order, **credit (khata)**, and loyalty points. You can add or delete a customer (delete asks for confirmation).
 
-### 4.11 Khata / Udhaar — `/customers/khata`
-
-Pakistani mart credit ledger.
-
-Har customer ke liye:
-
-- Total credit, paid, outstanding
-- Last payment date
-- Status: Paid / Due / Overdue
-- **Record payment** (customer ne udhaar wapas diya)
-- **Give credit** (manual udhaar)
-- Print / WhatsApp statement (demo)
-
-POS par **Customer Credit** se sale is ledger mein debit karti hai.
+The customer profile shows statistics, the credit ledger, purchase history, and returns.
 
 ---
 
-### 4.12 Returns — `/returns`
+### 5.11 Khata / Udhaar
 
-- Invoice number se ticket dhundein
-- Line-wise return qty
-- Reason: Damaged, Wrong Product, Expired, Customer Changed Mind, Other
-- Refund: Cash, Store Credit, Original Payment Method
-- Refund total
-- Past returns list
+This is the store’s credit ledger.
 
----
+For each customer you can see total credit given, amount paid, outstanding balance, last payment date, and status (Paid / Due / Overdue).
 
-### 4.13 Expenses — `/expenses`
+- **Record payment** when a customer settles udhaar.
+- **Give credit** to add a manual credit entry.
+- Print or send a statement on WhatsApp.
 
-Shop overhead.
-
-- Monthly total, entries, largest expense
-- Category chart (Rent, Electricity, Gas, Internet, Salary, Transport, …)
-- Add expense: title, category, amount, date, payment method, description
+Sales taken as **Customer Credit** on the POS are posted to this ledger automatically.
 
 ---
 
-### 4.14 Cash Management — `/cash`
+### 5.12 Returns
 
-Rozana cash drawer / shift.
-
-**Dikhta hai**
-
-- Opening balance
-- Cash sales
-- Cash refunds
-- Cash in / Cash out
-- Expected cash
-- Shift status (Open / Closed)
-- Movement list
-
-**Actions**
-
-- **Cash in** / **Cash out** — reason: Petty Expense, Owner Withdrawal, Supplier Payment, Cash Deposit
-- **Close shift** — actual cash count, difference (Exact / Short / Over), notes
-- Closed shift ke baad **Open shift** (demo opening Rs. 15,000)
+Find the original invoice, select quantities to return, and choose a reason (Damaged, Wrong Product, Expired, Customer Changed Mind, or Other). Refund by Cash, Store Credit, or the original payment method. Past returns remain in the list for reference.
 
 ---
 
-### 4.15 Reports — `/reports`
+### 5.13 Expenses
 
-Date range chips: today, yesterday, week, month, last month, year.
+Record shop overhead such as rent, electricity, gas, internet, salary, and transport.
 
-Export CSV / Excel / PDF (toolbar) + Print.
+The screen shows the monthly total, number of entries, the largest expense, and a category chart. When adding an expense, enter title, category, amount, date, payment method, and description.
 
-| Report | Kya dikhata hai |
+---
+
+### 5.14 Cash management
+
+Use this screen for the daily cash drawer.
+
+You will see opening balance, cash sales, cash refunds, cash in / cash out, expected cash, shift status (Open / Closed), and a movement list.
+
+- **Cash in** / **Cash out** — for petty expense, owner withdrawal, supplier payment, or cash deposit.
+- **Close shift** — enter the actual cash count. The system shows Exact, Short, or Over, and you may add notes.
+- After a closed shift, **Open shift** to start the next day.
+
+---
+
+### 5.15 Reports
+
+Choose a period: today, yesterday, this week, this month, last month, or this year. You can export (CSV, Excel, PDF) or print.
+
+| Report | Purpose |
 | --- | --- |
-| Sales Report | Gross/net sales, orders, items sold, avg order, chart |
-| Profit Report | Revenue − COGS − expenses share = net profit |
-| Product Sales | Units, revenue, profit; best vs slow moving |
-| Category Sales | Category-level performance |
-| Inventory / Stock Movement | On-hand value, low-stock SKUs |
-| Purchase / Supplier / Customer | Period summary (demo text + export) |
-| Credit / Khata | Outstanding customer credit |
-| Expense Report | Category bar chart |
-| Cash Register | Shift cash summary |
-| Tax Report | Tax currently 0% in store settings |
-| Employee Performance | Tickets + sales per cashier |
+| Sales | Gross/net sales, orders, items sold, average order |
+| Profit | Revenue minus cost of goods and expenses |
+| Product sales | Units, revenue, profit; fast and slow movers |
+| Category sales | Performance by category |
+| Inventory / stock movement | On-hand value and low-stock items |
+| Purchase / supplier / customer | Period summaries |
+| Credit / khata | Outstanding customer credit |
+| Expenses | Spend by category |
+| Cash register | Shift cash summary |
+| Tax | Sales tax (currently 0% unless changed in Settings) |
+| Employee performance | Tickets and sales per cashier |
 
 ---
 
-### 4.16 Employees — `/employees`
+### 5.16 Employees
 
-- Cards: name, role, phone, PIN, status
-- **Switch** — bina logout ke dusre user se sign in (demo)
-- Add / Edit employee
-- Role: Owner, Admin, Manager, Cashier, Inventory Manager
-- Permissions checkboxes:
-  - Apply Discount
-  - Change Product Price
-  - Delete Sale
-  - Void Invoice
-  - Issue Refund
-  - View Profit
-  - Manage Inventory
-  - Manage Expenses
-  - View Reports
-  - Manage Employees
+Staff cards show name, role, phone, PIN, and status.
+
+- **Switch** signs in as another user without a full log-out (for demonstration and supervised hand-over).
+- Add or edit an employee.
+- Roles: Owner, Admin, Manager, Cashier, Inventory Manager.
+
+Permissions you can grant or remove:
+
+- Apply discount  
+- Change product price  
+- Delete sale  
+- Void invoice  
+- Issue refund  
+- View profit  
+- Manage inventory  
+- Manage expenses  
+- View reports  
+- Manage employees  
 
 ---
 
-### 4.17 Settings — `/settings`
+### 5.17 Settings
 
-| Tab | Function |
+| Area | What you can change |
 | --- | --- |
-| Store Information | Name, phone, WhatsApp, email, address, NTN, STRN |
-| POS Settings | Barcode-first search, F-keys, Walk-in default (info) |
-| Receipt Settings | Logo, address, phone, NTN, cashier, customer, barcode, tax, discount, footer, size 58mm / 80mm / A4, live preview |
-| Tax Settings | Sales tax % |
-| Payment Methods | Cash, Card, Bank Transfer, JazzCash, EasyPaisa, Customer Credit enable/disable |
-| Inventory Settings | Low-stock alert rule |
-| Barcode Settings | Default label size |
-| Users & Permissions | Employees page par manage |
-| Backup | Mock JSON export |
-| Notifications | Bell alerts ka description |
+| Store information | Name, phone, WhatsApp, email, address, NTN, STRN |
+| POS | Barcode-first search, function keys, walk-in as default |
+| Receipt | Logo, address, phone, NTN, cashier, customer, barcode, tax, discount, footer, paper size (58 mm / 80 mm / A4), live preview |
+| Tax | Sales tax percentage |
+| Payment methods | Enable or disable Cash, Card, Bank Transfer, JazzCash, EasyPaisa, Customer Credit |
+| Inventory | Low-stock alert rule |
+| Barcodes | Default label size |
+| Users & permissions | Managed on the Employees screen |
+| Backup | Download a data file |
+| Notifications | Explains the alert bell |
 
 ---
 
-## 5. Typical daily workflow (cashier)
+## 6. Who should use which screens
 
-1. Login (PIN)
-2. Cash Management → confirm **Shift open**
-3. **Open POS**
-4. Barcode scan / search / product tap
-5. Customer select (agar khata / regular)
-6. Discount agar allowed
-7. **Pay Now** — Cash / JazzCash / EasyPaisa / Card / Split
-8. Receipt print / WhatsApp
-9. Next customer
-10. Shift end par **Close shift** — drawer count vs expected cash
-
-Manager extra: restock POs, expiry check, khata collection, expenses, reports.
-
----
-
-## 6. Data & architecture (developers)
-
-Frontend-only. Koi live backend nahi.
-
-| File | Role |
+| Role | Typical use |
 | --- | --- |
-| `lib/types.ts` | Domain types (Product, Sale, Customer, PO, …) |
-| `lib/mock/seed.ts` | Demo products, employees, sales, charts |
-| `lib/store/app-store.ts` | Products, sales, inventory, customers, register |
-| `lib/store/pos-store.ts` | Live cart |
-| `lib/store/ui-store.ts` | Sidebar, mobile nav, command palette |
-| `app/(main)/` | Authenticated screens |
-| `app/login/` | PIN login |
-| `components/pos/` | Checkout, cart, payment, receipt |
-| `components/layout/` | Shell, sidebar, header |
-
-Zustand stores **persist nahi** hote (page refresh = seed data wapas).
-
-API lagani ho to `lib/store/app-store.ts` ke actions ko HTTP calls se replace karein; UI screens same rehein.
+| Cashier | Sign in, POS, sales, customers, returns, cash drawer |
+| Inventory Manager | Products, stock, expiry, purchase orders, suppliers |
+| Manager | All of the above, plus expenses, khata follow-up, reports |
+| Owner | Full access, including employees, settings, profit, and cash |
 
 ---
 
-## 7. Important notes
+## 7. Practical notes
 
-- Yeh **production-quality frontend demo** hai, live payment gateway nahi.
-- JazzCash / EasyPaisa / WhatsApp / Email / PDF **UI + toast** hain.
-- Tax default **0%** hai; Settings se change ho sakta hai.
-- Print browser print dialog use karta hai.
-- `node_modules` aur `.next` git mein nahi jate.
+- Amounts are shown in **Rs. (PKR)**.
+- Sales tax is **0%** unless you change it in Settings.
+- Printing uses the browser’s print dialog and your connected printer.
+- JazzCash, EasyPaisa, WhatsApp, Email, and file export are provided in the interface for this demonstration.
+- This review copy uses sample store data. Refreshing the page restores the sample catalogue and figures. Live business data requires the production system connected to your store records.
 
 ---
 
-## 8. Screens map
+## 8. Need help?
 
-| URL | Screen |
-| --- | --- |
-| `/login` | PIN login |
-| `/` | Dashboard |
-| `/pos` | Checkout |
-| `/sales` | Sales history |
-| `/sales/[id]` | Invoice |
-| `/products` | Catalog |
-| `/products/new` | Add product |
-| `/products/[id]` | Edit product |
-| `/products/barcodes` | Label print |
-| `/categories` | Categories |
-| `/inventory` | Stock |
-| `/inventory/expiry` | Expiry |
-| `/purchase-orders` | POs |
-| `/purchase-orders/new` | Create PO |
-| `/suppliers` | Suppliers |
-| `/suppliers/[id]` | Supplier profile |
-| `/customers` | Customers |
-| `/customers/[id]` | Customer profile |
-| `/customers/khata` | Udhaar ledger |
-| `/returns` | Returns |
-| `/expenses` | Expenses |
-| `/cash` | Cash register |
-| `/reports` | Reports |
-| `/employees` | Staff + PIN |
-| `/settings` | Store settings |
+If a sale will not complete, stock looks wrong, or you cannot sign in:
+
+1. Confirm you are on the correct web address.
+2. Confirm your PIN and that your account is Active.
+3. Confirm the cash shift is open before selling.
+4. Contact your software provider with the screen name, what you were doing, and the time of the issue.
+
+---
+
+*Al-Noor Super Mart POS — confidential. For authorised store use only.*

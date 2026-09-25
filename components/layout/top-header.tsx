@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { useUiStore } from "@/lib/store/ui-store";
 import { useAppStore } from "@/lib/store/app-store";
 import { Badge } from "@/components/ui/badge";
+import { StoreSelector } from "@/components/org/store-selector";
 
 export function TopHeader({ title, extra }: { title?: string; extra?: React.ReactNode }) {
   const setMobileNavOpen = useUiStore((s) => s.setMobileNavOpen);
@@ -28,6 +29,7 @@ export function TopHeader({ title, extra }: { title?: string; extra?: React.Reac
       </button>
       {title && <h1 className="min-w-0 truncate text-sm font-semibold sm:text-base">{title}</h1>}
       <div className="min-w-0 flex-1" />
+      <StoreSelector className="hidden sm:block" />
       <Badge className="hidden shrink-0 md:inline-flex xl:hidden" tone={register.status === "Open" ? "success" : "neutral"}>
         {register.status === "Open" ? "Shift open" : "Closed"}
       </Badge>

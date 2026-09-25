@@ -10,6 +10,7 @@ import { Input, Label, Select } from "@/components/ui/input";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { AvatarHue } from "@/components/shared/thumbs";
 import { useAppStore } from "@/lib/store/app-store";
+import { useOrgStore } from "@/lib/store/org-store";
 import { uid } from "@/lib/utils";
 import type { Employee, EmployeeRole, PermissionSet } from "@/lib/types";
 import { toast } from "sonner";
@@ -64,6 +65,9 @@ export default function EmployeesPage() {
                     canManageEmployees: false,
                   },
                   avatarHue: Math.floor(Math.random() * 360),
+                  organizationId: "org_gulberg",
+                  accessLevel: "store",
+                  storeId: "store_gulberg",
                 })
               }
             >
@@ -86,7 +90,7 @@ export default function EmployeesPage() {
                 <Button size="sm" variant="outline" onClick={() => setEdit(e)}>
                   Edit
                 </Button>
-                <Button size="sm" variant="ghost" onClick={() => { setCurrent(e.id); toast.success(`Signed in as ${e.name}`); }}>
+                <Button size="sm" variant="ghost" onClick={() => { setCurrent(e.id); useOrgStore.getState().initContextForEmployee(e.accessLevel, e.organizationId); toast.success(`Signed in as ${e.name}`); }}>
                   Switch
                 </Button>
               </div>

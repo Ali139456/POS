@@ -2,76 +2,48 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
-import {
-  LayoutDashboard,
-  ScanBarcode,
-  Receipt,
-  Package,
-  Tags,
-  Warehouse,
-  ClipboardList,
-  Truck,
-  Users,
-  Undo2,
-  Wallet,
-  Banknote,
-  BarChart3,
-  UserCog,
-  Settings,
-  LogOut,
-  ChevronLeft,
-  Store,
-  X,
-  MoreVertical,
-} from "lucide-react";
+import { useMemo, useState } from "react";
+import { ChevronLeft, LogOut, MoreVertical, Store, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useUiStore } from "@/lib/store/ui-store";
 import { useAppStore, useCurrentEmployee } from "@/lib/store/app-store";
+import { useOrgStore } from "@/lib/store/org-store";
+import { getNavForUser, type NavItem } from "@/lib/navigation";
 import { AvatarHue } from "@/components/shared/thumbs";
 
-export const NAV = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/pos", label: "POS", icon: ScanBarcode },
-  { href: "/sales", label: "Sales", icon: Receipt },
-  { href: "/products", label: "Products", icon: Package },
-  { href: "/categories", label: "Categories", icon: Tags },
-  { href: "/inventory", label: "Inventory", icon: Warehouse },
-  { href: "/purchase-orders", label: "Purchase Orders", icon: ClipboardList },
-  { href: "/suppliers", label: "Suppliers", icon: Truck },
-  { href: "/customers", label: "Customers", icon: Users },
-  { href: "/returns", label: "Returns", icon: Undo2 },
-  { href: "/expenses", label: "Expenses", icon: Wallet },
-  { href: "/cash", label: "Cash Management", icon: Banknote },
-  { href: "/reports", label: "Reports", icon: BarChart3 },
-  { href: "/employees", label: "Employees", icon: UserCog },
-  { href: "/settings", label: "Settings", icon: Settings },
-];
-
-function NavLinks({ onNavigate, showLabels }: { onNavigate?: () => void; showLabels: boolean }) {
+function NavLinks({ onNavigate, showLabels, items }: { onNavigate?: () => void; showLabels: boolean; items: NavItem[] }) {
   const pathname = usePathname();
+  let lastSection: string | undefined;
+
   return (
     <nav className="flex-1 overflow-y-auto scrollbar-thin px-2 pb-3">
-      {NAV.map((item) => {
+      {items.map((item) => {
         const active = item.href === "/" ? pathname === "/" : pathname === item.href || pathname.startsWith(`${item.href}/`);
         const Icon = item.icon;
+        const showSection = item.section && item.section !== lastSection;
+        if (item.section) lastSection = item.section;
+
         return (
-          <Link
-            key={item.href}
-            href={item.href}
-            title={item.label}
-            onClick={onNavigate}
-            className={cn(
-              "mb-0.5 flex min-h-11 items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors",
-              !showLabels && "justify-center px-0",
-              active
-                ? "bg-primary/15 text-white shadow-[inset_0_0_0_1px_rgba(45,212,191,0.25)]"
-                : "text-slate-300 hover:bg-sidebar-accent hover:text-white",
+          <div key={item.href}>
+            {showSection && showLabels && (
+              <p className="mb-1 mt-3 px-3 text-[10px] font-semibold uppercase tracking-wider text-slate-500">{item.section}</p>
             )}
-          >
-            <Icon className={cn("size-4 shrink-0", active && "text-primary")} />
-            {showLabels && <span className="truncate">{item.label}</span>}
-          </Link>
+            <Link
+              href={item.href}
+              title={item.label}
+              onClick={onNavigate}
+              className={cn(
+                "mb-0.5 flex min-h-11 items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors",
+                !showLabels && "justify-center px-0",
+                active
+                  ? "bg-primary/15 text-white shadow-[inset_0_0_0_1px_rgba(45,212,191,0.25)]"
+                  : "text-slate-300 hover:bg-sidebar-accent hover:text-white",
+              )}
+            >
+              <Icon className={cn("size-4 shrink-0", active && "text-primary")} />
+              {showLabels && <span className="truncate">{item.label}</span>}
+            </Link>
+          </div>
         );
       })}
     </nav>
@@ -81,8 +53,24 @@ function NavLinks({ onNavigate, showLabels }: { onNavigate?: () => void; showLab
 function SidebarChrome({ onNavigate, showLabels }: { onNavigate?: () => void; showLabels: boolean }) {
   const store = useAppStore((s) => s.store);
   const employee = useCurrentEmployee();
+  const context = useOrgStore((s) => s.storeContext);
+  const childStores = useOrgStore((s) => s.childStores);
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const navItems = useMemo(
+    () => getNavForUser(employee.accessLevel, employee.role, context),
+    [employee.accessLevel, employee.role, context],
+  );
+
+  const subtitle =
+    employee.accessLevel === "parent"
+      ? context === "all"
+        ? "Parent · All Stores"
+        : context === "warehouse"
+          ? "Central Warehouse"
+          : childStores.find((s) => s.organizationId === context)?.name ?? store.city
+      : childStores.find((s) => s.organizationId === employee.organizationId)?.name ?? store.name;
 
   function logout() {
     setMenuOpen(false);
@@ -99,18 +87,18 @@ function SidebarChrome({ onNavigate, showLabels }: { onNavigate?: () => void; sh
         {showLabels && (
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold tracking-tight">Al-Noor POS</p>
-            <p className="truncate text-xs text-slate-400">{store.city}</p>
+            <p className="truncate text-xs text-slate-400">{subtitle}</p>
           </div>
         )}
       </div>
-      <NavLinks onNavigate={onNavigate} showLabels={showLabels} />
+      <NavLinks onNavigate={onNavigate} showLabels={showLabels} items={navItems} />
       <div className="relative border-t border-white/10 p-2 lg:p-3">
         <div className={cn("flex items-center gap-2 rounded-xl bg-sidebar-accent p-2.5", !showLabels && "flex-col justify-center px-1")}>
           <AvatarHue name={employee.name} hue={employee.avatarHue} size="sm" />
           {showLabels && (
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-medium">{employee.name}</p>
-              <p className="truncate text-xs text-slate-400">{store.name}</p>
+              <p className="truncate text-xs text-slate-400">{employee.role}</p>
             </div>
           )}
           <button

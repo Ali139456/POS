@@ -11,13 +11,14 @@ import { PaymentDialog } from "@/components/pos/payment-dialog";
 import { CustomerSelector } from "@/components/pos/customer-selector";
 import { HoldDialog } from "@/components/pos/hold-dialog";
 import { useAppStore } from "@/lib/store/app-store";
+import { useScopedProducts } from "@/lib/hooks/use-scoped-data";
 import { cartTotals, usePosStore } from "@/lib/store/pos-store";
 import { formatPKR, uid } from "@/lib/utils";
 import { toast } from "sonner";
 import type { Product } from "@/lib/types";
 
 export default function PosPage() {
-  const products = useAppStore((s) => s.products);
+  const products = useScopedProducts();
   const categories = useAppStore((s) => s.categories);
   const customers = useAppStore((s) => s.customers);
   const holdSale = useAppStore((s) => s.holdSale);

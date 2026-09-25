@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Al-Noor Super Mart POS — User Guide</title>
+  <style>
+    :root {
+      --ink: #0f172a;
+      --muted: #475569;
+      --line: #e2e8f0;
+      --accent: #0f766e;
+      --paper: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #f1f5f9;
+      font: 16px/1.55 "Segoe UI", Calibri, Arial, sans-serif;
+    }
+    .page {
+      max-width: 820px;
+      margin: 32px auto;
+      background: var(--paper);
+      padding: 56px 64px;
+      box-shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
+    }
+    .cover {
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 28px;
+      margin-bottom: 36px;
+    }
+    .kicker {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 8px 0 6px;
+      font-size: 32px;
+      letter-spacing: -0.03em;
+    }
+    .subtitle { margin: 0; color: var(--muted); font-size: 18px; }
+    .meta {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    h2 {
+      margin: 36px 0 12px;
+      font-size: 20px;
+      color: var(--accent);
+      page-break-after: avoid;
+    }
+    h3 {
+      margin: 24px 0 8px;
+      font-size: 16px;
+      page-break-after: avoid;
+    }
+    p, li { color: #1e293b; }
+    ol, ul { padding-left: 22px; }
+    li { margin: 4px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 12px 0 20px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: #f8fafc; color: #0f172a; }
+    .note {
+      background: #f0fdfa;
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      margin: 16px 0;
+    }
+    footer {
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    @page { size: A4; margin: 16mm 14mm; }
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; padding: 0; box-shadow: none; max-width: none; }
+      h2, h3 { break-after: avoid; }
+      table { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <article class="page">
+    <header class="cover">
+      <p class="kicker">Confidential — authorised store use</p>
+      <h1>Al-Noor Super Mart POS</h1>
+      <p class="subtitle">User Guide</p>
+      <p class="meta">
+        Prepared for store owners, managers, and counter staff<br />
+        Currency: Pakistani Rupee (Rs.) &nbsp;·&nbsp; Version 1.0 &nbsp;·&nbsp; August 2026
+      </p>
+    </header>
+
+    <p>
+      This guide explains how to use Al-Noor Point of Sale in daily store operations.
+      You do not need technical knowledge, installation, or a computer terminal.
+      Open the software in a web browser, sign in, and start selling.
+    </p>
+
+    <h2>1. How to open the software</h2>
+    <ol>
+      <li>On your computer, laptop, tablet, or phone, open <strong>Google Chrome</strong> or <strong>Microsoft Edge</strong>.</li>
+      <li>Go to the web address provided to you for Al-Noor POS. Bookmark this page for daily use.</li>
+      <li>The sign-in screen will appear.</li>
+      <li>Select your name, enter your 4-digit PIN, and tap <strong>OK</strong>.</li>
+    </ol>
+    <p>A desktop or laptop at the counter is best for checkout. Tablets and phones are fully supported.</p>
+    <p>If the page does not load, check your internet connection and try again. Contact your software provider if the problem continues.</p>
+
+    <div class="note">
+      <strong>Sample accounts for this demonstration</strong>
+      <table>
+        <thead>
+          <tr><th>Staff</th><th>Role</th><th>PIN</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Ali Hassan</td><td>Cashier</td><td>1234</td></tr>
+          <tr><td>Fatima Khan</td><td>Manager</td><td>2468</td></tr>
+          <tr><td>Usman Malik</td><td>Owner</td><td>0000</td></tr>
+          <tr><td>Ayesha Raza</td><td>Inventory Manager</td><td>4321</td></tr>
+          <tr><td>Bilal Ahmed</td><td>Cashier</td><td>1111</td></tr>
+        </tbody>
+      </table>
+      Use these only while reviewing the demonstration. Live store PINs should be unique and kept private.
+    </div>
+
+    <h2>2. What the system does</h2>
+    <p>Al-Noor POS is a complete retail system for a Pakistani grocery, mart, or supermarket. Staff can:</p>
+    <ul>
+      <li>Sell products at the counter (barcode, search, or tap)</li>
+      <li>Accept Cash, Card, Bank Transfer, JazzCash, EasyPaisa, split payments, and customer credit (khata / udhaar)</li>
+      <li>Print or share receipts</li>
+      <li>Manage products, stock, expiry, suppliers, and purchase orders</li>
+      <li>Keep customer records and khata ledgers</li>
+      <li>Process returns and refunds</li>
+      <li>Record shop expenses and cash-drawer shifts</li>
+      <li>View sales, profit, and other reports</li>
+      <li>Control staff roles and store settings</li>
+    </ul>
+
+    <h2>3. Screen layout</h2>
+    <p><strong>Left menu.</strong> Store name, your profile, and all modules (Dashboard, POS, Sales, Products, and so on). On a large screen the full names are shown. On a tablet, icons only. On a phone, tap the menu button to open the list. Use the three dots (⋮) on your profile to log out.</p>
+    <p><strong>Top bar.</strong> Page title, today’s date, whether the cash shift is open, search, light/dark theme, and alerts (low stock, expiry, khata, cash drawer).</p>
+    <p><strong>Quick search.</strong> On a computer, press Ctrl + K to jump to a page, product, customer, invoice, or supplier.</p>
+
+    <h2>4. Recommended daily routine (cashier)</h2>
+    <ol>
+      <li>Sign in with your PIN.</li>
+      <li>Open <strong>Cash Management</strong> and confirm the shift is Open.</li>
+      <li>Open <strong>POS</strong>.</li>
+      <li>Scan or tap products into the cart.</li>
+      <li>Select a customer if they are a regular or buying on khata.</li>
+      <li>Apply a discount only if your role allows it.</li>
+      <li>Tap <strong>Pay Now</strong> and complete payment.</li>
+      <li>Print or send the receipt, then start the next sale.</li>
+      <li>At closing, go to Cash Management, count the drawer, and <strong>Close shift</strong>.</li>
+    </ol>
+    <p>Managers should also review restock, expiry, khata collections, expenses, and reports during the day.</p>
+
+    <h2>5. Features and how to use them</h2>
+
+    <h3>5.1 Sign in</h3>
+    <p>Choose your name from the staff list. Enter your 4-digit PIN on the keypad (suitable for touch screens). An incorrect PIN shows an error. A correct PIN takes you into the system.</p>
+
+    <h3>5.2 Dashboard</h3>
+    <p>The home screen is a snapshot of the store today. You will see today’s sales, profit, number of orders, and average order value; cash versus card/online mix; a sales chart (Today, 7 days, 30 days, 3 months, 1 year); top-selling products; low-stock alerts (with a restock action); recent sales; and business totals such as inventory value, customers, suppliers, customer credit, and supplier payables. Use <strong>Open POS</strong> to go straight to checkout.</p>
+
+    <h3>5.3 POS checkout (main counter screen)</h3>
+    <p><strong>Finding products.</strong> Search by name, SKU, or barcode. Filter by category (All, Grocery, Beverages, Snacks, Dairy, Frozen, Bakery, Household, and others). Product cards show price and stock. Out-of-stock items cannot be sold. If a product has sizes (for example Coca-Cola bottles), choose the variant first.</p>
+    <p><strong>Cart.</strong> Increase or decrease quantity with + / −. Apply a line discount or an order discount (rupees or percent), if permitted. Choose Walk-in or a named customer. Hold sale parks the cart for later. Clear cart empties it after confirmation. The footer shows subtotal, discounts, tax, round-off, and Grand Total.</p>
+    <p><strong>Payment.</strong> Tap Pay Now, then choose Cash (amount received and change; quick amounts Exact, 500, 1,000, 2,000, 5,000, 10,000), Card, Bank Transfer, JazzCash, EasyPaisa, Customer Credit (a named customer is required), or Split payment (two methods; amounts must equal the total).</p>
+    <p>When the sale is complete, stock is reduced, an invoice number is created, and you can print, download, or share the receipt. Then start a New Sale. Use Held in the header to resume or delete a parked cart.</p>
+    <p>On phone or tablet, a bar at the bottom shows item count and total. Tap it to open the cart, then pay.</p>
+    <table>
+      <thead>
+        <tr><th>Key</th><th>Action</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>F1</td><td>Focus product search</td></tr>
+        <tr><td>F2</td><td>Select customer</td></tr>
+        <tr><td>F4</td><td>Hold the current sale</td></tr>
+        <tr><td>F8 / F9 / F10</td><td>Open payment</td></tr>
+        <tr><td>Esc</td><td>Close a dialog or the cart</td></tr>
+        <tr><td>Ctrl + K</td><td>Search the whole system</td></tr>
+      </tbody>
+    </table>
+
+    <h3>5.4 Sales history</h3>
+    <p>Open Sales to review completed invoices. Search by invoice number, customer, or cashier. Filter by date and payment method. Open an invoice to view line items, discounts, tax, total, and payment details. Available actions: View, Print, Return, Void. A voided sale is marked Voided and should be used only when authorised.</p>
+
+    <h3>5.5 Products</h3>
+    <p>Search by name, SKU, barcode, or brand. Filter by category, stock status, supplier, and Active/Inactive. Add, edit, copy, or delete a product (delete asks for confirmation). Print barcodes and export to CSV.</p>
+    <p>When adding or editing a product you can set name, description, category, brand, SKU and barcode, purchase/selling/wholesale/minimum prices (profit and margin are calculated), stock levels and unit, supplier, manufacturing and expiry dates, batch, and variants (sizes or packs).</p>
+    <p><strong>Barcode labels.</strong> Select products, quantity, and label size (small / medium / large), then print the sheet.</p>
+
+    <h3>5.6 Categories</h3>
+    <p>Categories appear as tabs on the POS screen. Add a category, see how many products it contains, or delete it after confirmation.</p>
+
+    <h3>5.7 Inventory and expiry</h3>
+    <p>Inventory shows stock value, product count, low stock, out of stock, and items expiring soon. For each product you can see available stock, reserved quantity, minimum level, cost, and value.</p>
+    <p>Adjust stock when goods arrive, leave, or must be corrected (Stock In, Stock Out, Damage, Expired, Lost, Correction, Personal Use, Other). Always add a reason and notes. Movement history records date, product, type, quantity, previous and new stock, and the staff member.</p>
+    <p>Expiry lists batches that are expired or due within 7, 30, 60, or 90 days, with quantity, date, days remaining, value, and Critical / Watch status.</p>
+
+    <h3>5.8 Purchase orders</h3>
+    <p>Each order shows number, supplier, date, expected delivery, total, and status: Draft, Ordered, Partially Received, Received, or Cancelled. Receive goods against ordered quantities (partial receipts are allowed). Cancel an order if it will not arrive.</p>
+    <p>To create an order: choose the supplier and dates, add product lines (quantity × cost), apply discount if needed, then save. The order is placed as Ordered.</p>
+
+    <h3>5.9 Suppliers</h3>
+    <p>Keep distributor and vendor records: company, contact, phone, email, and NTN, plus total purchases and outstanding balance. Open a supplier to record a payment, view the ledger, see products they supply, or create a purchase order.</p>
+
+    <h3>5.10 Customers</h3>
+    <p>Customer types: Walk-in, Regular, Wholesale, and VIP. Search by name or phone. Each record shows purchases, order count, average order, credit (khata), and loyalty points. The customer profile shows statistics, the credit ledger, purchase history, and returns.</p>
+
+    <h3>5.11 Khata / Udhaar</h3>
+    <p>For each customer you can see total credit given, amount paid, outstanding balance, last payment date, and status (Paid / Due / Overdue). Record payment when a customer settles udhaar. Give credit to add a manual credit entry. Print or send a statement on WhatsApp. Sales taken as Customer Credit on the POS are posted to this ledger automatically.</p>
+
+    <h3>5.12 Returns</h3>
+    <p>Find the original invoice, select quantities to return, and choose a reason (Damaged, Wrong Product, Expired, Customer Changed Mind, or Other). Refund by Cash, Store Credit, or the original payment method. Past returns remain in the list for reference.</p>
+
+    <h3>5.13 Expenses</h3>
+    <p>Record shop overhead such as rent, electricity, gas, internet, salary, and transport. The screen shows the monthly total, number of entries, the largest expense, and a category chart. When adding an expense, enter title, category, amount, date, payment method, and description.</p>
+
+    <h3>5.14 Cash management</h3>
+    <p>You will see opening balance, cash sales, cash refunds, cash in / cash out, expected cash, shift status (Open / Closed), and a movement list.</p>
+    <ul>
+      <li><strong>Cash in / Cash out</strong> — petty expense, owner withdrawal, supplier payment, or cash deposit.</li>
+      <li><strong>Close shift</strong> — enter the actual cash count. The system shows Exact, Short, or Over.</li>
+      <li>After a closed shift, <strong>Open shift</strong> to start the next day.</li>
+    </ul>
+
+    <h3>5.15 Reports</h3>
+    <p>Choose a period: today, yesterday, this week, this month, last month, or this year. You can export (CSV, Excel, PDF) or print.</p>
+    <table>
+      <thead>
+        <tr><th>Report</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Sales</td><td>Gross/net sales, orders, items sold, average order</td></tr>
+        <tr><td>Profit</td><td>Revenue minus cost of goods and expenses</td></tr>
+        <tr><td>Product sales</td><td>Units, revenue, profit; fast and slow movers</td></tr>
+        <tr><td>Category sales</td><td>Performance by category</td></tr>
+        <tr><td>Inventory / stock movement</td><td>On-hand value and low-stock items</td></tr>
+        <tr><td>Purchase / supplier / customer</td><td>Period summaries</td></tr>
+        <tr><td>Credit / khata</td><td>Outstanding customer credit</td></tr>
+        <tr><td>Expenses</td><td>Spend by category</td></tr>
+        <tr><td>Cash register</td><td>Shift cash summary</td></tr>
+        <tr><td>Tax</td><td>Sales tax (0% unless changed in Settings)</td></tr>
+        <tr><td>Employee performance</td><td>Tickets and sales per cashier</td></tr>
+      </tbody>
+    </table>
+
+    <h3>5.16 Employees</h3>
+    <p>Staff cards show name, role, phone, PIN, and status. Switch signs in as another user without a full log-out. Add or edit an employee. Roles: Owner, Admin, Manager, Cashier, Inventory Manager.</p>
+    <p>Permissions you can grant or remove: apply discount, change product price, delete sale, void invoice, issue refund, view profit, manage inventory, manage expenses, view reports, manage employees.</p>
+
+    <h3>5.17 Settings</h3>
+    <table>
+      <thead>
+        <tr><th>Area</th><th>What you can change</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Store information</td><td>Name, phone, WhatsApp, email, address, NTN, STRN</td></tr>
+        <tr><td>POS</td><td>Barcode-first search, function keys, walk-in as default</td></tr>
+        <tr><td>Receipt</td><td>Logo, address, phone, NTN, cashier, customer, barcode, tax, discount, footer, paper size (58 mm / 80 mm / A4), live preview</td></tr>
+        <tr><td>Tax</td><td>Sales tax percentage</td></tr>
+        <tr><td>Payment methods</td><td>Enable or disable Cash, Card, Bank Transfer, JazzCash, EasyPaisa, Customer Credit</td></tr>
+        <tr><td>Inventory</td><td>Low-stock alert rule</td></tr>
+        <tr><td>Barcodes</td><td>Default label size</td></tr>
+        <tr><td>Users &amp; permissions</td><td>Managed on the Employees screen</td></tr>
+        <tr><td>Backup</td><td>Download a data file</td></tr>
+        <tr><td>Notifications</td><td>Explains the alert bell</td></tr>
+      </tbody>
+    </table>
+
+    <h2>6. Who should use which screens</h2>
+    <table>
+      <thead>
+        <tr><th>Role</th><th>Typical use</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Cashier</td><td>Sign in, POS, sales, customers, returns, cash drawer</td></tr>
+        <tr><td>Inventory Manager</td><td>Products, stock, expiry, purchase orders, suppliers</td></tr>
+        <tr><td>Manager</td><td>All of the above, plus expenses, khata follow-up, reports</td></tr>
+        <tr><td>Owner</td><td>Full access, including employees, settings, profit, and cash</td></tr>
+      </tbody>
+    </table>
+
+    <h2>7. Practical notes</h2>
+    <ul>
+      <li>Amounts are shown in Rs. (PKR).</li>
+      <li>Sales tax is 0% unless you change it in Settings.</li>
+      <li>Printing uses the browser’s print dialog and your connected printer.</li>
+      <li>JazzCash, EasyPaisa, WhatsApp, Email, and file export are provided in the interface for this demonstration.</li>
+      <li>This review copy uses sample store data. Refreshing the page restores the sample catalogue and figures. Live business data requires the production system connected to your store records.</li>
+    </ul>
+
+    <h2>8. Need help?</h2>
+    <p>If a sale will not complete, stock looks wrong, or you cannot sign in:</p>
+    <ol>
+      <li>Confirm you are on the correct web address.</li>
+      <li>Confirm your PIN and that your account is Active.</li>
+      <li>Confirm the cash shift is open before selling.</li>
+      <li>Contact your software provider with the screen name, what you were doing, and the time of the issue.</li>
+    </ol>
+
+    <footer>
+      Al-Noor Super Mart POS — User Guide. Confidential. For authorised store use only.
+    </footer>
+  </article>
+</body>
+</html>

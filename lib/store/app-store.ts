@@ -96,6 +96,7 @@ interface AppState {
   cashInOut: (type: "in" | "out", amount: number, reason: string, notes?: string) => void;
   closeShift: (actualCash: number, note?: string) => void;
   openShift: (openingCash: number) => void;
+  addNotification: (notification: Omit<AppNotification, "id" | "read">) => void;
   markNotificationRead: (id: string) => void;
   markAllNotificationsRead: () => void;
   nextInvoice: () => string;
@@ -205,7 +206,10 @@ export const useAppStore = create<AppState>()((set, get) => ({
 
       addSale: (sale) =>
         set((s) => {
-          const products = s.products.map((p) => {
+          const useOrgInventory = Boolean(sale.organizationId);
+          const products = useOrgInventory
+            ? s.products
+            : s.products.map((p) => {
             const item = sale.items.find((i) => i.productId === p.id && (!i.variantId || p.variants.some((v) => v.id === i.variantId)));
             if (!item) return p;
             if (item.variantId) {
@@ -394,6 +398,11 @@ export const useAppStore = create<AppState>()((set, get) => ({
           },
         });
       },
+
+      addNotification: (notification) =>
+        set((s) => ({
+          notifications: [{ ...notification, id: uid("notif"), read: false }, ...s.notifications],
+        })),
 
       markNotificationRead: (id) =>
         set((s) => ({ notifications: s.notifications.map((n) => (n.id === id ? { ...n, read: true } : n)) })),

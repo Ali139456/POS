@@ -41,6 +41,11 @@ export function StatusBadge({
     Wholesale: { tone: "info", label: "Wholesale" },
     VIP: { tone: "warning", label: "VIP" },
     "Walk-in": { tone: "neutral", label: "Walk-in" },
+    Pending: { tone: "warning", label: "Pending" },
+    Approved: { tone: "success", label: "Approved" },
+    Rejected: { tone: "danger", label: "Rejected" },
+    Dispatched: { tone: "info", label: "Dispatched" },
+    "Partial Recv": { tone: "warning", label: "Partial Recv" },
   };
   const cfg = map[status] ?? { tone: "neutral" as const, label: status };
   return <Badge tone={cfg.tone}>{cfg.label}</Badge>;
